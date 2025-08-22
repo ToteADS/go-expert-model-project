@@ -1,8 +1,8 @@
 package database
 
 import (
-	"projeto-modelo/internal/database"
 	"projeto-modelo/internal/entity"
+	"projeto-modelo/internal/infra/database"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

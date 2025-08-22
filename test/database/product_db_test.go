@@ -3,8 +3,8 @@ package database
 import (
 	"fmt"
 	"math/rand"
-	"projeto-modelo/internal/database"
 	"projeto-modelo/internal/entity"
+	"projeto-modelo/internal/infra/database"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
