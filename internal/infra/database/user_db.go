@@ -24,13 +24,13 @@ func (u *User) FindAll(page, limit int, sort string) ([]entity.User, error) {
 	if page > 0 {
 		offset = (page - 1) * limit
 	}
-	
+
 	// Use a valid field for ordering since created_at doesn't exist
 	orderBy := "id"
 	if sort != "" {
 		orderBy = sort
 	}
-	
+
 	tx := u.DB.Limit(limit).Offset(offset).Order(orderBy).Find(&users)
 	if tx.Error != nil {
 		return nil, tx.Error
@@ -56,8 +56,8 @@ func (u *User) FindByID(id string) (*entity.User, error) {
 	return &user, nil
 }
 
-func (u *User) Update(user *entity.User) error {
-	return u.DB.Save(user).Error
+func (u *User) Update(id string, user *entity.User) error {
+	return u.DB.Where("id = ?", id).Save(user).Error
 }
 
 func (u *User) Delete(id string) error {

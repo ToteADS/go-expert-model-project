@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	_, err := configs.LoadConfig(".")
+	config, err := configs.LoadConfig(".")
 	if err != nil {
 		log.Fatalf("Error loading config: %v", err)
 	}
@@ -27,6 +27,9 @@ func main() {
 	productDb := database.NewProduct(db)
 	productHandler := handlers.NewProductHandler(productDb)
 
+	userDB := database.NewUser(db)
+	userHandler := handlers.NewUserHandler(userDB, config.TokenAuth, config.JWTExpiresIn)
+
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Post("/products", productHandler.CreateProduct)
@@ -34,6 +37,10 @@ func main() {
 	r.Get("/products/{id}", productHandler.GetProduct)
 	r.Put("/products/{id}", productHandler.UpdateProduct)
 	r.Delete("/products/{id}", productHandler.DeleteProduct)
+
+	r.Post("/users", userHandler.CreateUser)
+	r.Post("/users/generate_token", userHandler.GetJWT)
+
 
 	http.ListenAndServe(":8000", r)
 }

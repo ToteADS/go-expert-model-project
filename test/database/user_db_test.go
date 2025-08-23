@@ -116,7 +116,7 @@ func (suite *UserDBTestSuite) TestUpdateUser() {
 	user.Name = "Tote Updated"
 	user.Email = "tote.updated@tapp.dev.br"
 
-	err := suite.userDB.Update(user)
+	err := suite.userDB.Update(user.ID.String(), user)
 	assert.NoError(suite.T(), err)
 
 	// Verify the update
