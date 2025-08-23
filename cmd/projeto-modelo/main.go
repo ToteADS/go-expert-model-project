@@ -8,6 +8,8 @@ import (
 	"projeto-modelo/internal/infra/database"
 	"projeto-modelo/internal/infra/webserver/handlers"
 
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/chi/v5"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -25,7 +27,9 @@ func main() {
 	productDb := database.NewProduct(db)
 	productHandler := handlers.NewProductHandler(productDb)
 
-	http.HandleFunc("/products", productHandler.CreateProduct)
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
+	r.Post("/products", productHandler.CreateProduct)
 
-	http.ListenAndServe(":8000", nil)
+	http.ListenAndServe(":8000", r)
 }
