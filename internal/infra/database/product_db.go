@@ -28,8 +28,8 @@ func (p *Product) FindByID(id string) (*entity.Product, error) {
 	return &product, nil
 }
 
-func (p *Product) Update(product *entity.Product) error {
-	_, err := p.FindByID(product.ID.String())
+func (p *Product) Update(id string, product *entity.Product) error {
+	_, err := p.FindByID(id)
 	if err != nil {
 		return err
 	}

@@ -115,7 +115,7 @@ func (suite *ProductDBTestSuite) TestUpdateProduct() {
 	product.Name = "Product 2"
 	product.Price = 200
 
-	err := suite.productDB.Update(product)
+	err := suite.productDB.Update(product.ID.String(), product)
 	assert.NoError(suite.T(), err)
 
 	updatedProduct, err := suite.productDB.FindByID(product.ID.String())
@@ -125,7 +125,7 @@ func (suite *ProductDBTestSuite) TestUpdateProduct() {
 
 	product.Name = "Product 3"
 	product.Price = 300
-	err = suite.productDB.Update(product)
+	err = suite.productDB.Update(product.ID.String(), product)
 	assert.NoError(suite.T(), err)
 
 	updatedProduct, err = suite.productDB.FindByID(product.ID.String())
